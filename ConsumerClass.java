@@ -24,6 +24,7 @@ public class ConsumerClass
 	/*	for each method internally calls consumer interface that accepts T
 	as argument which is functional interface
 		with only method accept accept the same type of argument defined in interface */
+		//Lamda expression works only for functional interface
 		al.forEach(i->  System.out.println(i));
 	}
 }
