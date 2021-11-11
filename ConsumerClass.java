@@ -25,6 +25,8 @@ public class ConsumerClass
 	as argument which is functional interface
 		with only method accept accept the same type of argument defined in interface */
 		//Lamda expression works only for functional interface
+		
+		//for each(defined in java 1.8) method is a default method of iterable interface 
 		al.forEach(i->  System.out.println(i));
 	}
 }
