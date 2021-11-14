@@ -3,7 +3,7 @@
 //Streams in java 8 : Parallel stream : works in multithreading
 Streams useful in process large amount of data
 Stream is like flow of water stream we can use it only once 
-
+While using stream api's it says only focus on what to do I'll take care of how to do
 
 *******************************************************************************/
 import java.util.*;
