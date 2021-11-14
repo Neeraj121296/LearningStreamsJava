@@ -3,11 +3,12 @@
 //Streams in java 8 : Parallel stream : works in multithreading
 Streams useful in process large amount of data
 Stream is like flow of water stream we can use it only once 
-While using stream api's it says only focus on what to do I'll take care of how to do
+
 
 *******************************************************************************/
 import java.util.*;
 import java.util.stream.*;
+import java.util.function.*;
 import java.util.function.Function;
 import java.util.function.BinaryOperator;
 public class StreamMapReduce
@@ -59,6 +60,94 @@ public class StreamMapReduce
 			    }
 			});
 			System.out.println(result2);
-		
+			/*
+			Use case for filter method of stream 
+			To sum all the values divisible by 6
+			*/
+			/*
+			Filter method accepts the object of predicate interface
+			In Predicate interface(1.8) we have test method which returns 
+			boolean value
+			If test method return false then filter will remove that 
+			element from the list
+			*/
+			Predicate<Integer> p=new Predicate<Integer>(){
+			    public boolean test(Integer i){
+			        return i%2==0;
+			    }
+			};
+				System.out.println(al.stream()
+			                   .filter(p)
+			                   .reduce(0,Integer :: sum));
+			System.out.println(al.stream()
+			                   .filter(i-> i%2==0)
+			                   .reduce(0,Integer :: sum));
+			System.out.println(al.stream()
+			                   .filter(i-> i%2==0)
+			                   .map(i->i*2)
+			                   .reduce(0,Integer :: sum));
+			/*
+			Use case of findFirst method 
+			it returns optional
+			returns the first matched value
+			                   
+			                   */
+			System.out.println(al.stream()
+			                   .filter(i-> i%2==0)
+			                   .map(i->i*2)
+			                   .findFirst());   //Output : Optional[4]
+			                   //outout if there no value divisible by 2 : Optional.empty
+			  	System.out.println(al.stream()
+			                   .filter(i-> i%2==0)
+			                   .map(i->i*2)
+			                   .findFirst()
+			                   .orElse(0));   //Output : 4              
+				System.out.println(al.stream()
+			                   .filter(i-> i%7==0)
+			                   .map(i->i*2)
+			                   .findFirst()
+			                   );     
+			                   //Output : Optional.empty
+			 	System.out.println(al.stream()
+			                   .filter(i-> i%7==0)
+			                   .map(i->i*2)
+			                   .findFirst()
+			                   .orElse(0)
+			                   );  
+			                    //Output : 0
+			 /*
+			 filter and map are lazy functions, they always go for lazy evalution 
+			 findFirst is eager/terminal method
+			 findFirst will ask map for the first value
+			 map ask filter to check if only the first value is divisible by 
+			 2 or not
+			 */        
+			 	System.out.println(al.stream()
+			                   .filter(Main :: isDivisible)
+			                   .map(Main :: isMapped)
+			                   .findFirst()
+			                   .orElse(0));  
 	}
+	
+	public static boolean isDivisible(Integer i){
+	    System.out.println("isDivisible "+i);
+	    return i%2==0;
+	}
+	
+	public static Integer isMapped(Integer i){
+	    System.out.println("isMapped "+i);
+	    return i*2;
+	}
+	/*
+	Output :
+
+isDivisible 1
+isDivisible 2
+isMapped 2
+4
+Filter is only applied to two value and map is only applied to one value
+This prooves that Filter and map method have Lazy Evaluation and findFirst has
+Early Evaluation.
+	*/
+	
 }
