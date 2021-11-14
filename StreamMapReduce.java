@@ -7,6 +7,9 @@ Stream is like flow of water stream we can use it only once
 
 *******************************************************************************/
 import java.util.*;
+import java.util.stream.*;
+import java.util.function.Function;
+import java.util.function.BinaryOperator;
 public class StreamMapReduce
 {
 	public static void main(String[] args) {
@@ -27,6 +30,11 @@ public class StreamMapReduce
 		This method has a return type of Stream which is a interface*/
 	
 			System.out.println(al.stream().map(i-> i*2).reduce(0,(c,e)->c+e));
+			/*
+			Above statement can also be written as
+			*/
+			System.out.println(al.stream().map(i-> i*2).reduce(0,(c,e)->Integer.sum(c,e)));	
+			System.out.println(al.stream().map(i-> i*2).reduce(0,Integer::sum));	
 			/*map method needs object of function interface and function interface takes
 			two parameter one is type of value and second is return type 
 			it takes a integer parameter and also return the integer
@@ -39,6 +47,18 @@ public class StreamMapReduce
 			it extends BiFunction<T,T,T>
 			BiFunction has a method apply()
 			*/
+			Stream s =al.stream();
+			Stream s1=s.map(new Function<Integer,Integer>(){
+			    public Integer apply(Integer i){
+			        return i*2;
+			    }
+			});
+			Integer result2=(Integer)s1.reduce(0,new BinaryOperator<Integer>(){
+			    public Integer apply(Integer i,Integer j){
+			        return i+j;
+			    }
+			});
+			System.out.println(result2);
 		
 	}
 }
